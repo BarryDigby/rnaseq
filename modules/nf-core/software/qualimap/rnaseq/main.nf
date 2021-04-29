@@ -21,7 +21,7 @@ process QUALIMAP_RNASEQ {
     input:
     tuple val(meta), path(bam)
     path  gtf
-    
+
     output:
     tuple val(meta), path("${prefix}"), emit: results
     path  "*.version.txt"             , emit: version
@@ -30,7 +30,6 @@ process QUALIMAP_RNASEQ {
     def software   = getSoftwareName(task.process)
     prefix         = options.suffix ? "${meta.id}${options.suffix}" : "${meta.id}"
     def paired_end = meta.single_end ? '' : '-pe'
-    def memory     = task.memory.toGiga() + "G"
 
     def strandedness = 'non-strand-specific'
     if (meta.strandedness == 'forward') {
@@ -43,7 +42,6 @@ process QUALIMAP_RNASEQ {
     mkdir tmp
     export _JAVA_OPTIONS=-Djava.io.tmpdir=./tmp
     qualimap \\
-        --java-mem-size=$memory \\
         rnaseq \\
         $options.args \\
         -bam $bam \\
