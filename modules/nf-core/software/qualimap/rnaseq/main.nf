@@ -6,7 +6,7 @@ options        = initOptions(params.options)
 
 process QUALIMAP_RNASEQ {
     tag "$meta.id"
-    label 'process_medium'
+    label 'process_high'
     publishDir "${params.outdir}",
         mode: params.publish_dir_mode,
         saveAs: { filename -> saveFiles(filename:filename, options:params.options, publish_dir:getSoftwareName(task.process), meta:meta, publish_by_meta:['id']) }
@@ -43,7 +43,7 @@ process QUALIMAP_RNASEQ {
     export _JAVA_OPTIONS=-Djava.io.tmpdir=./tmp
     qualimap \\
         rnaseq \\
-        $options.args \\
+        --java-mem-size 12G \\
         -bam $bam \\
         -gtf $gtf \\
         -p $strandedness \\
