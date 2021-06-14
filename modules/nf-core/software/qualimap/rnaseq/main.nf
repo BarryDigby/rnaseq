@@ -43,7 +43,7 @@ process QUALIMAP_RNASEQ {
     export _JAVA_OPTIONS=-Djava.io.tmpdir=./tmp
     qualimap \\
         rnaseq \\
-        --java-mem-size 12G \\
+        --java-mem-size=12G \\
         -bam $bam \\
         -gtf $gtf \\
         -p $strandedness \\
